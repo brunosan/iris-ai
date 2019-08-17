@@ -1,0 +1,8 @@
+fastai
+starlette
+uvicorn
+python-multipart
+aiofiles
+aiohttp
+google
+google-cloud-storage

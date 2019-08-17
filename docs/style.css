@@ -1,0 +1,163 @@
+.container {
+  max-width: 960px;
+}
+
+/*
+ * Custom translucent site header
+ */
+
+.site-header {
+  background-color: rgba(0, 0, 0, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.site-header a {
+  color: #999;
+  transition: ease-in-out color .15s;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/*
+ * Dummy devices (replace them with your own or something else entirely!)
+ */
+
+.product-device {
+  position: absolute;
+  right: 10%;
+  bottom: -30%;
+  width: 300px;
+  height: 540px;
+  background-color: #333;
+  border-radius: 21px;
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+}
+
+.product-device::before {
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  bottom: 10%;
+  left: 10px;
+  content: "";
+  background-color: rgba(255, 255, 255, .1);
+  border-radius: 5px;
+}
+
+.product-device-2 {
+  top: -25%;
+  right: auto;
+  bottom: 0;
+  left: 5%;
+  background-color: #e5e5e5;
+}
+
+
+/*
+ * Extra utilities
+ */
+
+.flex-equal > * {
+  -ms-flex: 1;
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .flex-md-equal > * {
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
+
+.overflow-hidden { overflow: hidden; }
+
+body {
+    background-color: #fff;
+}
+
+.no-display {
+    display: none;
+}
+
+.myAlert-bottom{
+    position: fixed;
+    bottom: 5px;
+    left:2%;
+    width: 96%;
+    z-index: 100;
+}
+
+.center {
+    margin: auto;
+    padding: 10px;
+    padding-left:50px;
+    padding-right:50px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.title {
+    font-size: 30px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: #262626;
+}
+
+.content {
+    margin-top: 10em;
+}
+
+.card-width {
+  width: 18rem;
+  min-width: 18rem;
+  max-width: 18rem;
+}
+.card-img-top {
+  width: unset;
+  height: : 11rem;
+  min-height: 11rem;
+  max-height: 11rem;
+  background-color: #868e96;
+  display: initial;
+}
+.bd-placeholder-img {
+  width: 100%;
+}
+.analyze {
+    margin-top: 5em;
+}
+
+.upload-label {
+    padding: 10px;
+    font-size: 12px;
+}
+
+.result-label {
+    margin-top: 0.5em;
+    padding: 10px;
+    font-size: 13px;
+}
+
+button.choose-file-button {
+  width: 200px;
+  height: 40px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 1px #7052CB;
+  font-size: 13px;
+  color: #7052CB;
+}
+
+button.analyze-button {
+    width: 200px;
+    height: 40px;
+    border: solid 1px #7052CB;
+    border-radius: 2px;
+    background-color: #7052CB;
+    font-size: 13px;
+    color: #ffffff;
+}
+
+button:focus {outline:0;}

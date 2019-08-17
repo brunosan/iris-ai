@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-328064-26"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-328064-26');
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Identify banknotes">
+  <meta name="author" content="Impact Science: Bruno Sánchez-Andrade Nuño">
+  <title>Iris</title>
+
+  <link rel="canonical" href="http://iris-248512.appspot.com/">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  <!-- Custom styles for this template -->
+  <link rel='stylesheet' href='style.css'>
+</head>
+
+<body>
+  <nav class=" site-header sticky-top py-1 navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="py-2 navbar-brand" href="#">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false">
+        <title>Iris</title>
+        <circle cx="12" cy="12" r="10" />
+        <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />
+      </svg>
+    </a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Iris <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="myAlert-bottom alert alert-warning fade show" id="tos" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Terms of service:</strong> We only upload a small version of the image so we can do our predictions. We might keep it only so we can improve our AI.<br>
+    No other information about the user is stored. More info data@brunosan.eu
+  </div>
+
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="col">
+      <h1 class="display-4 font-weight-normal">Iris</h1>
+      <p class="lead font-weight-normal">Identify banknotes using Deep Learning AI.</p>
+
+
+
+      <div class='container'>
+        <div class="row" id="card-row">
+          <div class="col card-width">
+            <div class="card">
+              <div>
+                <img id="sample1" src="" class='card-img-top img-fluid' alt='Chosen Image' height='200'>
+              </div>
+              <div class="card-body">
+                <div class="card-text lead font-weight-normal alert alert-success no-display" role="alert" id='sample1-label'>Prediction</div>
+                <div class="card-text">
+                  <button type="button" class="btn btn-primary" id='sample1-button' class='choose-file-button' type='button' onclick='analyzeSample(this)'>Analize</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col card-width">
+            <div class="card">
+              <div>
+                <img id="sample2" src="" class='card-img-top img-fluid' alt='Chosen Image' height='200'>
+              </div>
+              <div class="card-body">
+                <div class="card-text lead font-weight-normal alert alert-success no-display" role="alert" id='sample2-label'>Prediction</div>
+                <div class="card-text">
+                  <button type="button" class="btn btn-primary" id='sample2-button' class='choose-file-button' type='button' onclick='analyzeSample(this)'>Analize</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col card-width" id="card-template">
+            <div class="card">
+              <div id="ImgPlaceholder" class="">
+                <a id="lastImgPlaceholder" href="#" onclick='showPicker(this)'>
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Upload your image</text>
+              </svg></a>
+              <div id="userimgdiv" class="no-display">
+                <img id="userimg" src="" class='card-img-top img-fluid no-display' alt='Chosen Image' height='200'>
+              </div>
+            </div>
+                <div class="card-body">
+                <div class="card-text lead font-weight-normal alert alert-success no-display" role="alert" id='userimg-label'>Prediction</div>
+
+                <div>
+                  <div class='no-display'>
+                    <input id='userpicker' class='no-display' type='file' name='file' accept='image/*' onchange='selectImg(this.value)'>
+                  </div>
+                  <button type="button" class="btn btn-primary" id='userimg-button' class='choose-file-button' type='button' onclick='showPicker(this)'>Select Image</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      </div>
+  </div>
+
+  <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 py-3">
+        <h2 class="display-5">Best in class</h2>
+        <p class="lead"> 30% better than <a href="https://www.sciencedirect.com/science/article/pii/S1319157816300416">best academic paper</a>.</p>
+        <p class="">Currently trainned on euros, US dollars, and Jordan dinars.</p>
+      </div>
+      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+      <a href="notebooks/banknotes-multiclass.html" ><img src="imgs/test.png" class="img-fluid" ></img></a></div>
+    </div>
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 p-3">
+        <h2 class="display-5">Learn how it learns</h2>
+        <p class="lead">We show you exactly how we built it.</p>
+        <p class="">Powered by Pytorch via Fast.ai</p>
+      </div>
+      <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+        <a href="notebooks/banknotes-multiclass.html" ><img src="imgs/learn.png" class="img-fluid" ></img></a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="container py-5">
+    <div class="row">
+      <div class="col-12 col-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24" focusable="false">
+          <title>Product</title>
+          <circle cx="12" cy="12" r="10" />
+          <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />
+        </svg>
+        <small class="d-block mb-3 text-muted">&copy; Impact Science 2019</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="notebooks/banknotes-multiclass.html">Deep Learning AI</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" onclick="showTos()" href="#">Data Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5 id="about">About</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="http://brunosan.eu">Team</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script src='client.js'></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>
