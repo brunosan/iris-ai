@@ -21,7 +21,7 @@ function rand_img(n_samples) {
   var rand = Math.ceil(Math.random() * (n_samples));
   if ( rand == old_rand ) rand = Math.ceil(Math.random() * (n_samples));
   old_rand = rand;
-  return "imgs/sample" + rand + ".jpg"
+  return "assets/sample" + rand + ".jpg"
 };
 
 el("sample1").src = rand_img(n_samples);
