@@ -172,5 +172,8 @@ def lambda_handler(event, context):
     logger.info("Returning response: %s" % response)
     return {
         "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": "*"
+        },
         "body": json.dumps(response)
     }
