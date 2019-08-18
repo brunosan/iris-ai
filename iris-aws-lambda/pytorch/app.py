@@ -6,6 +6,8 @@ except ImportError:
     pass
 
 import os
+import re
+import base64
 import io
 import json
 import tarfile
@@ -113,6 +115,11 @@ def predict(input_object, model):
 
     return response
 
+def base64_to_bytes(base64String):
+    image_data = re.sub('^data:image/.+;base64,', '', base64String)
+    image_bytes = io.BytesIO(base64.b64decode(image_data))
+    return image_bytes
+
 def input_fn(request_body):
     """Pre-processes the input data from JSON to PyTorch Tensor.
 
@@ -129,8 +136,7 @@ def input_fn(request_body):
     logger.info("Getting input URL to a image Tensor object")
     if isinstance(request_body, str):
         request_body = json.loads(request_body)
-    img_request = requests.get(request_body['url'], stream=True)
-    img = PIL.Image.open(io.BytesIO(img_request.content))
+    img = PIL.Image.open(base64_to_bytes(request_body['url']))
     img_tensor = preprocess(img)
     img_tensor = img_tensor.unsqueeze(0)
     return img_tensor
@@ -157,7 +163,8 @@ def lambda_handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
     logger.info("Starting event")
-    logger.info(event)
+    #log_event = str(event)
+    #logger.info((log_event[:100] + '...' + log_event[-100:]) if len(log_event) > 201 else log_event)
     logger.info("Getting input object")
     input_object = input_fn(event['body'])
     logger.info("Calling prediction")
@@ -165,5 +172,8 @@ def lambda_handler(event, context):
     logger.info("Returning response: %s" % response)
     return {
         "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": "*"
+        },
         "body": json.dumps(response)
     }

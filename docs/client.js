@@ -10,7 +10,8 @@ function el(x) {
 
 var max_side_px = 500
 var quality = 0.8
-var server = "https://iris-248512.appspot.com/"
+var server = "https://gh3phbuesj.execute-api.us-east-1.amazonaws.com/Prod/invocations/"
+//var server = "http://localhost:3000/invocations"
 
 var spinner = '<div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>'
 
@@ -150,6 +151,22 @@ function analyzeSample(input){
   })
 }
 
+limit_detection = 1
+function parse_response(response){
+  console.log(response);
+  probabilities=response["probabilities"]
+  result=""
+  for (var tag in probabilities) {
+    if (probabilities.hasOwnProperty(tag)) {
+      console.log(tag,probabilities[tag]);
+      if (probabilities[tag] > limit_detection){
+        result = result + tag + ";"
+      }
+    }
+  }
+  return result;
+}
+
 function analyze(input, skip_upload = false) {
   id = input.split("-")[0];
   var uploadFiles = el(id).src;
@@ -157,30 +174,24 @@ function analyze(input, skip_upload = false) {
 
   el(id + '-label').innerHTML = 'Uploading ...' + spinner;
   el(id + '-label').className = el(id + '-label').className.replace("no-display", "")
-  el(id + '-button').remove()
+  //el(id + '-button').remove()
+
   var xhr = new XMLHttpRequest();
   var loc = window.location
-  xhr.open('POST', server + "analyze", true);
+  xhr.open('POST', server , true);
   xhr.onerror = function(e) {
-    alert("Error on respone",xhr.responseText);
     console.log("Error on respone",xhr.responseText,e);
-    el(id + '-label').className = el(id + '-label').className + "no-display"
+    //el(id + '-label').className = el(id + '-label').className + "no-display"
   }
   xhr.onload = function(e) {
+    console.log("on load respone",xhr,xhr.responseText,e);
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
-      el(id + '-label').innerHTML = `Result = ${response['result']}`;
+      el(id + '-label').innerHTML = `Result = ${parse_response(response)}`;
     }
   }
 
-  var fileData = new FormData();
-  blob = dataURItoBlob(uploadFiles)
-  var file = new File([blob], "image.png", {
-    skip_upload: "True",
-    type: "image/png",
-    lastModified: new Date()
-  });
-  fileData.append('file', file);
-  fileData.append('skip_upload', skip_upload);
-  xhr.send(fileData);
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  var params = '{"url":"'+uploadFiles+'"}';
+  xhr.send(params);
 }
