@@ -163,7 +163,8 @@ def lambda_handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
     logger.info("Starting event")
-    logger.info(event)
+    #log_event = str(event)
+    #logger.info((log_event[:100] + '...' + log_event[-100:]) if len(log_event) > 201 else log_event)
     logger.info("Getting input object")
     input_object = input_fn(event['body'])
     logger.info("Calling prediction")
