@@ -106,7 +106,6 @@ function analyzeImg(input,file) {
     image.src = e.target.result;
   };
   el("userimgdiv").className = el("userimgdiv").className.replace("no-display", "")
-  el(id + '-button').innerHTML = spinner + ' Analyzing ...';
   reader.readAsDataURL(file);
 
 }
@@ -158,7 +157,6 @@ function parse_response(response){
   result=""
   for (var tag in probabilities) {
     if (probabilities.hasOwnProperty(tag)) {
-      console.log(tag,probabilities[tag]);
       if (probabilities[tag] > limit_detection){
         result = result + tag + ";"
       }
@@ -181,6 +179,7 @@ function analyze(input, skip_upload = false) {
   xhr.open('POST', server , true);
   xhr.onerror = function(e) {
     console.log("Error on respone",xhr.responseText,e);
+    el(id + '-label').innerHTML = `Error :-(`;
     //el(id + '-label').className = el(id + '-label').className + "no-display"
   }
   xhr.onload = function(e) {
