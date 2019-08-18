@@ -100,7 +100,7 @@ function analyzeImg(input,file) {
       context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height);
       console.log("Converted");
 
-      el(id).src = canvas.toDataURL("image/png", quality);
+      el(id).src = canvas.toDataURL("image/jpeg", quality);
       analyze(id)
     };
     image.src = e.target.result;
