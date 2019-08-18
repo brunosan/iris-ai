@@ -88,11 +88,9 @@ function analyzeImg(input,file) {
 
   var reader = new FileReader();
   reader.onload = function(e) {
-    console.log("Reader on load",e);
     var image = new Image();
     //compress Image
     image.onload = function() {
-      console.log("Image on load",this);
       var canvas = document.createElement("canvas");
       var context = canvas.getContext("2d");
       var new_size = get_size(image.width, image.height, max_side_px);
@@ -152,7 +150,6 @@ function analyzeSample(input){
 
 limit_detection = 1
 function parse_response(response){
-  console.log(response);
   probabilities=response["probabilities"]
   result=""
   for (var tag in probabilities) {
@@ -168,7 +165,6 @@ function parse_response(response){
 function analyze(input, skip_upload = false) {
   id = input.split("-")[0];
   var uploadFiles = el(id).src;
-  console.log("analyze: ", el(id));
 
   el(id + '-label').innerHTML = 'Uploading ...' + spinner;
   el(id + '-label').className = el(id + '-label').className.replace("no-display", "")
@@ -183,9 +179,9 @@ function analyze(input, skip_upload = false) {
     //el(id + '-label').className = el(id + '-label').className + "no-display"
   }
   xhr.onload = function(e) {
-    console.log("on load respone",xhr,xhr.responseText,e);
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
+      console.log("Response:", response);
       el(id + '-label').innerHTML = `Result = ${parse_response(response)}`;
     }
   }
