@@ -10,7 +10,8 @@ function el(x) {
 
 var max_side_px = 500
 var quality = 0.8
-var server = "https://iris-248512.appspot.com/"
+var server = "https://gh3phbuesj.execute-api.us-east-1.amazonaws.com/Prod/invocations/"
+//var server = "http://localhost:3000/invocations"
 
 var spinner = '<div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>'
 
