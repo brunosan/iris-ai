@@ -51,6 +51,7 @@ preprocess = transforms.Compose([
     )
 ])
 
+
 def load_model():
     """Loads the PyTorch model into memory from a file on S3.
 
@@ -82,6 +83,9 @@ def load_model():
 # load the model when lambda execution context is created
 model = load_model()
 
+def sort_dict(dic):
+    return {k: "%.2f%%"%dic[k] for k in sorted(dic, key=dic.get, reverse=True)}
+
 def predict(input_object, model):
     """Predicts the class from an input image.
 
@@ -98,21 +102,23 @@ def predict(input_object, model):
     """
     logger.info("Calling prediction on model")
     start_time = time.time()
-    predict_values = model(input_object)
+    output = model(input_object)
     inference_seconds = float("%.2f"%(time.time() - start_time))
     logger.info("--- Inference time: %s seconds ---" % inference_seconds )
-    preds = F.softmax(predict_values, dim=1)
-    probabilities=[ '%.2f' % float(100*elem) for elem in preds[0]]
-    conf_score, indx = torch.max(preds, dim=1)
-    predict_class = classes[indx]
-    logger.info(f'Predicted class is %s' % predict_class)
-    logger.info(f'Softmax confidence score is %s' % conf_score.item() )
+    output_list = [ '%.2f' % float(100*elem) for elem in output[0].detach().numpy()]
+    prediction = F.softmax(output, dim=1)
+    prediction_list = [ '%.2f' % float(100*elem) for elem in prediction[0].detach().numpy()]
+    probabilities=[ '%.2f' % float(100*elem) for elem in prediction[0]]
     response = {}
-    response['class'] = str(predict_class)
-    response['confidence'] = conf_score.item()
-    response['inference_seconds'] = inference_seconds
-    response['probabilities'] = dict(zip(classes,probabilities))
-    response['predict'] = predict_values
+    temp = list(zip(output_list,prediction_list,probabilities))
+    temp2 = dict(zip(classes,temp))
+    #print(temp,temp2)
+    response['probabilities'] = {k: v for k, v in temp2.items() if float(v[0]) >0}
+    response['predictions'] = probabilities
+    response['output'] = output_list
+    response['summary'] = list(response['probabilities'].keys())
+    response['others'] = sort_dict({k: float(v[2]) for k, v in temp2.items() if float(v[0]) <0 and float(v[2]) >0})
+    logger.info(f'Predicted class is %s' % response['summary'])
 
     return response
 
@@ -141,6 +147,18 @@ def input_fn(request_body):
     img_tensor = preprocess(img)
     img_tensor = img_tensor.unsqueeze(0)
     return img_tensor
+
+class MyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return super(MyEncoder, self).default(obj)
+
 
 def lambda_handler(event, context):
     """Lambda handler function
@@ -176,5 +194,5 @@ def lambda_handler(event, context):
         "headers": {
             "Access-Control-Allow-Origin": "*"
         },
-        "body": json.dumps(response)
+        "body": json.dumps(response, cls=MyEncoder)
     }
