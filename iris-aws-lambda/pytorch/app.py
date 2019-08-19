@@ -112,6 +112,7 @@ def predict(input_object, model):
     response['confidence'] = conf_score.item()
     response['inference_seconds'] = inference_seconds
     response['probabilities'] = dict(zip(classes,probabilities))
+    response['predict'] = predict_values
 
     return response
 
