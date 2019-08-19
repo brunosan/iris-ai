@@ -169,14 +169,14 @@ function analyze(input, skip_upload = false) {
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
       console.log("Response:", response);
-      el(id + '-label').innerHTML = `Result = ${response['summary'].toString()}`;
+      el(id + '-label').innerHTML = "Result = "+response['summary'].toString();
       console.log(Object.keys(response['others']).length,Object.keys(response['others']).length=== 0);
       if (Object.keys(response['others']).length === 0){
         el(id + '-label2').className = el(id + '-label2').className + " no-display "
       } else {
         el(id + '-label2').className = el(id + '-label2').className.replace(/no-display/g, "")
         console.log(id,JSON.stringify(response['others']));
-        el(id + '-label2').innerHTML = `${JSON.stringify(response['others']).split(",").join("\n")}`;
+        el(id + '-label2').innerHTML = "Alternatives: "+JSON.stringify(response['others']).split(",").join("\n");
       }
     }
   }
