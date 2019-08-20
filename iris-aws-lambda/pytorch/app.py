@@ -182,9 +182,17 @@ def lambda_handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
     logger.info("Starting event")
-    #log_event = str(event)
-    #logger.info((log_event[:100] + '...' + log_event[-100:]) if len(log_event) > 201 else log_event)
+    log_event = str(event)
+    logger.info((log_event[:200] + '...\n ...' + log_event[-200:]) if len(log_event) > 401 else log_event)
     logger.info("Getting input object")
+    if event['body'] == "ping":
+        logger.info("Ping event, returning pong")
+        return {"statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": "*"
+        },
+        "body": "pong"}
+
     input_object = input_fn(event['body'])
     logger.info("Calling prediction")
     response = predict(input_object, model)

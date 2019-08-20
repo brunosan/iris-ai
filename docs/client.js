@@ -25,6 +25,25 @@ function rand_img(n_samples) {
   return "assets/sample" + rand + ".jpg"
 };
 
+function wake_up_aws_lambda(){
+  console.log("Making 'ping' call to trigger cold-start: Ping...");
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', server , true);
+  xhr.onerror = function(e) {
+    console.log("Error on respone",xhr.responseText,e);
+  }
+  xhr.onload = function(e) {
+    if (this.readyState === 4) {
+      var response = e.target.responseText;
+      console.log("Pong received. App ready. Response:", response);
+    }
+  }
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  var params = 'ping';
+  xhr.send(params);
+}
+
+wake_up_aws_lambda();
 el("sample1").src = rand_img(n_samples);
 el("sample2").src = rand_img(n_samples);
 
@@ -170,7 +189,6 @@ function analyze(input, skip_upload = false) {
       var response = JSON.parse(e.target.responseText);
       console.log("Response:", response);
       el(id + '-label').innerHTML = "Result = "+response['summary'].toString();
-      console.log(Object.keys(response['others']).length,Object.keys(response['others']).length=== 0);
       if (Object.keys(response['others']).length === 0){
         el(id + '-label2').className = el(id + '-label2').className + " no-display "
       } else {
