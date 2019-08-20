@@ -82,6 +82,30 @@
 
       <div class='container'>
         <div class="row" id="card-row">
+          <div class="col card-width" id="card-template">
+            <div class="card">
+              <div id="ImgPlaceholder" class="">
+                <a id="lastImgPlaceholder" href="#lastImgPlaceholder" onclick='showPicker(this)'>
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Upload your image</text>
+              </svg></a>
+              <div id="userimgdiv" class="no-display">
+                <img id="userimg" src="" class='card-img-top img-fluid no-display' alt='Chosen Image' height='200'>
+              </div>
+            </div>
+                <div class="card-body">
+                <div class="card-text lead font-weight-normal alert alert-success no-display" role="alert" id='userimg-label'>Prediction</div>
+                <div class="card-text lead font-weight-normal alert alert-light no-display" role="alert" id='userimg-label2'>Alternatives</div>
+                <div>
+                  <div class='no-display'>
+                    <input id='userpicker' class='no-display' type='file' name='file' accept='image/*' onchange='selectImg(this.value)'>
+                  </div>
+                  <button type="button" class="btn btn-primary" id='userimg-button' class='choose-file-button' type='button' onclick='showPicker(this)'>Select Image</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="col card-width">
             <div class="card">
               <div>
@@ -107,31 +131,6 @@
                 <div class="card-text lead font-weight-normal alert alert-light no-display" role="alert" id='sample2-label2'>Alternatives</div>
                 <div class="card-text">
                   <button type="button" class="btn btn-primary" id='sample2-button' class='choose-file-button' type='button' onclick='analyzeSample(this)'>Analize</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col card-width" id="card-template">
-            <div class="card">
-              <div id="ImgPlaceholder" class="">
-                <a id="lastImgPlaceholder" href="#lastImgPlaceholder" onclick='showPicker(this)'>
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Upload your image</text>
-              </svg></a>
-              <div id="userimgdiv" class="no-display">
-                <img id="userimg" src="" class='card-img-top img-fluid no-display' alt='Chosen Image' height='200'>
-              </div>
-            </div>
-                <div class="card-body">
-                <div class="card-text lead font-weight-normal alert alert-success no-display" role="alert" id='userimg-label'>Prediction</div>
-                <div class="card-text lead font-weight-normal alert alert-light no-display" role="alert" id='userimg-label2'>Alternatives</div>
-                <div>
-                  <div class='no-display'>
-                    <input id='userpicker' class='no-display' type='file' name='file' accept='image/*' onchange='selectImg(this.value)'>
-                  </div>
-                  <button type="button" class="btn btn-primary" id='userimg-button' class='choose-file-button' type='button' onclick='showPicker(this)'>Select Image</button>
                 </div>
               </div>
             </div>
